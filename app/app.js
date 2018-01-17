@@ -32,10 +32,10 @@ app.post('/user',(req,res)=>{
  var item = db.get("users").find(obj.uuid);
  if(!item){
   db.get("users").push(obj).write();
-  console.log("add user");
+  console.log("add user:",obj);
  }else{
   item.assign(obj).write();
-  console.log("update user");
+  console.log("update user:",obj);
  }
  }catch(e){
   res.send("fail");
