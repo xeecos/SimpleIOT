@@ -39,7 +39,7 @@ app.post('/user',(req,res)=>{
   console.log("update user:",obj);
  }
  }catch(e){
-  res.send("fail");
+  res.send("fail:"+e.toString());
   return;
  }
  res.send("ok");
