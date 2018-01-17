@@ -29,7 +29,7 @@ app.get('/', (req, res) => res.send('Hello World!'));
 app.post('/user',(req,res)=>{
  try{
  const obj = JSON.parse(req.rawBody);
- var item = db.get("users").find({uuid:obj.uuid});
+ var item = db.get("users").find({uuid:obj.uuid}).value();
   console.log(item);
  if(!item){
   db.get("users").push(obj).write();
