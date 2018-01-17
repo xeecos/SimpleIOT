@@ -27,12 +27,17 @@ app.use(function(req, res, next) {
 });
 app.get('/', (req, res) => res.send('Hello World!'));
 app.post('/user',(req,res)=>{
+ try{
  const obj = JSON.parse(req.rawBody);
  var item = db.get("users").find(obj.uuid);
  if(!item){
   db.get("users").push(obj).write();
  }else{
   item.assign(obj).write();
+ }
+ }catch(e){
+  res.send("fail");
+  return;
  }
  res.send("ok");
 });
