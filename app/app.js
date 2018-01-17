@@ -11,10 +11,23 @@ const adapter = new FileSync('iot.db')
 const db = low(adapter)
  
 db.defaults({ users: [] }).write();
- 
+app.use(function(req, res, next) {
+ var data = new Buffer("");
+ var str = "";
+ var bufLen = 0;
+ req.on("data", function(chunk) {
+   bufLen += chunk.length;
+   str += chunk.toString();
+   // data = Buffer.concat([data, chunk]);
+ });
+ req.on("end", function() {
+   req.rawBody = new Buffer(str);
+   next();
+ });
+});
 app.get('/', (req, res) => res.send('Hello World!'));
 app.post('/user',(req,res)=>{
- const obj = JSON.parse(req.query.json);
+ const obj = JSON.parse(req.rawBody);
  db.get("users").find(obj.uuid).assign(obj).write();
  res.send("ok");
 });
