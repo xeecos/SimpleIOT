@@ -1,0 +1,11 @@
+{
+  "name": "iot",
+  "version": "1.0.0",
+  "main": "./app/app.js",
+  "author": "xeecos",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "lowdb": "^1.0.0"
+  }
+}
