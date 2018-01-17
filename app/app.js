@@ -28,16 +28,14 @@ app.use(function(req, res, next) {
 app.get('/', (req, res) => res.send('Hello World!'));
 app.post('/user',(req,res)=>{
  try{
- const obj = JSON.parse(req.rawBody);
- var item = db.get("users").find({uuid:obj.uuid}).value();
+  const obj = JSON.parse(req.rawBody);
+  var item = db.get("users").find({uuid:obj.uuid}).value();
   console.log(item);
- if(!item){
-  db.get("users").push(obj).write();
-  console.log("add user:",obj);
- }else{
-  item.assign(obj).write();
-  console.log("update user:",obj);
- }
+  if(!item){
+   db.get("users").push(obj).write();
+  }else{
+   db.get("users").find({uuid:obj.uuid}).assign(obj).write();
+  }
  }catch(e){
   res.send("fail:"+e.toString());
   return;
