@@ -28,7 +28,12 @@ app.use(function(req, res, next) {
 app.get('/', (req, res) => res.send('Hello World!'));
 app.post('/user',(req,res)=>{
  const obj = JSON.parse(req.rawBody);
- db.get("users").find(obj.uuid).assign(obj).write();
+ var item = db.get("users").find(obj.uuid);
+ if(!item){
+  db.get("users").push(obj).write();
+ }else{
+  item.assign(obj).write();
+ }
  res.send("ok");
 });
 app.get("/users",(req,res)=>{
